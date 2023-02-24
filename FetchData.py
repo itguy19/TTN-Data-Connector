@@ -57,14 +57,9 @@ def on_message(client, userdata, msg):
     latitude = themsg["uplink_message"]["locations"]["user"]["latitude"]
     longitude = themsg["uplink_message"]["locations"]["user"]["longitude"]
     device_UUID = themsg["end_device_ids"]["device_id"]
-    # Print out the values
     
+    # Send data over to the DB
     send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, longitude, latitude)
-    print(f"Humidity: {humidity}")
-    print(f"Temperature: {temperature}")
-    print(f"Timestamp: {timestamp}")
-    print(f"Latitude: {latitude}")
-    print(f"Longitude: {longitude}")
 
 # Establish connnection
 client = mqtt.Client()

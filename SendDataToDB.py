@@ -12,19 +12,22 @@ def send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, lo
 
    cursor = conn.cursor()
    
+   # Insert new record sql
    insert_stmt = (
       "INSERT INTO Record(recordUUID, deviceUUID, timestamp, temperature, humidity, batteryv)"
       "VALUES (%s, %s, %s, %s, %s, %s)"
    )
    data = (record_UUID, device_UUID, timestamp, temperature, humidity, batteryv)
+   
+   # Update the position of the device
+   update_sql = f"UPDATE Device SET latitude = {latitude}, longitude = {longitude} WHERE deviceUUID = 'eui-a840417ee185f0b5'"
 
    try:
       # Executing the SQL command
       cursor.execute(insert_stmt, data)
+      cursor.execute(update_sql)
       conn.commit()
    except Exception:
       traceback.print_exc()
       conn.rollback()
    conn.close()
-   
-send_sensor_data("eui-a840417ee185f0b5", 2352095363, 22.5, 35.7, 3.671, 8.73057686533798, 47.3547373056341)
