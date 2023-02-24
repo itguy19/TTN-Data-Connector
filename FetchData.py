@@ -51,7 +51,7 @@ def on_message(client, userdata, msg):
     # Extract the neccessary information from the json file
     themsg = json.loads(msg.payload.decode("utf-8"))
     humidity = themsg["uplink_message"]["decoded_payload"]["Hum_SHT"]
-    temperature = themsg["uplink_message"]["decoded_payload"]["BatV"]
+    batteryv = themsg["uplink_message"]["decoded_payload"]["BatV"]
     temperature = themsg["uplink_message"]["decoded_payload"]["TempC_SHT"]
     timestamp = themsg["uplink_message"]["rx_metadata"][0]["timestamp"]
     latitude = themsg["uplink_message"]["locations"]["user"]["latitude"]
@@ -59,7 +59,7 @@ def on_message(client, userdata, msg):
     device_UUID = themsg["end_device_ids"]["device_id"]
     # Print out the values
     
-    send_sensor_data()
+    send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, longitude, latitude)
     print(f"Humidity: {humidity}")
     print(f"Temperature: {temperature}")
     print(f"Timestamp: {timestamp}")
