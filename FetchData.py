@@ -14,6 +14,7 @@ TTN MQTT Documentation: https://www.thethingsindustries.com/docs/integrations/mq
 
 import json
 import paho.mqtt.client as mqtt
+from SendDataToDB import send_sensor_data
 
 APPLICATION_ID = "idpaprojekt"
 API_KEY = "NNSXS.SLHBRSNYUQR6KEVQ423HWZWBVTIRG5BW6HEIE6Q.Q4BL3VZFJ7V3J4ZYWBWQ4L4UGCQK44CQRJ7LVXYZJ74BK3PDJY2A"
@@ -55,7 +56,10 @@ def on_message(client, userdata, msg):
     timestamp = themsg["uplink_message"]["rx_metadata"][0]["timestamp"]
     latitude = themsg["uplink_message"]["locations"]["user"]["latitude"]
     longitude = themsg["uplink_message"]["locations"]["user"]["longitude"]
+    device_UUID = themsg["end_device_ids"]["device_id"]
     # Print out the values
+    
+    send_sensor_data()
     print(f"Humidity: {humidity}")
     print(f"Temperature: {temperature}")
     print(f"Timestamp: {timestamp}")
