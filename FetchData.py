@@ -1,4 +1,4 @@
-'''Simple Device Data Harvester
+'''FetchData
     Author: Andras Tarlos
     Date: 24/02/23
     Version: 1.0
@@ -14,15 +14,14 @@ TTN MQTT Documentation: https://www.thethingsindustries.com/docs/integrations/mq
 
 import json
 import paho.mqtt.client as mqtt
-from DBConnections import send_sensor_data
+from APIConnections import send_sensor_data, get_device_uuid
 from ReadData import read_api_key, read_app_id
 
 APPLICATION_ID = read_app_id()
 API_KEY = read_api_key()
 
 TTN_SERVER = "eu1.cloud.thethings.network"
-DEVICE_ID = "eui-a840417ee185f0b5"
-TOPIC = f"v3/{APPLICATION_ID}@ttn/devices/{DEVICE_ID}/up"
+DEVICE_IDS = get_device_uuid()
 
 
 def on_connect(client, userdata, flags, rc):
@@ -38,7 +37,9 @@ def on_connect(client, userdata, flags, rc):
     print("Connected to ", client._host, "port: ", client._port)
     print("Flags: ", flags, "return code: ", rc)
     # Subscribes to the device to receive data
-    client.subscribe(TOPIC)
+    for d in DEVICE_IDS:
+        TOPIC = f"v3/{APPLICATION_ID}@ttn/devices/{d}/up"
+        client.subscribe(TOPIC)
 
 def on_message(client, userdata, msg):
     """_summary_
@@ -61,8 +62,12 @@ def on_message(client, userdata, msg):
     
     # Send data over to the DB
     send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, longitude, latitude)
+    print(humidity)
 
 if __name__ == "__main__":
+    """_summary_
+    Main function where this cronjob process starts. 
+    """    
     # Establish connnection
     client = mqtt.Client()
     client.on_connect = on_connect
