@@ -26,19 +26,18 @@ def send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, lo
        longitude (_type_): Coordinate longitude
        latitude (_type_): Coordinate latitude
    """
-   json_dict = {
-      "deviceUUID": device_UUID,
-      "timestamp": timestamp,
-      "temperature": temperature,
-      "humidity": humidity,
-      "batteryv": batteryv,
-      "longitude": longitude,
-      "latitude": latitude
-   }
    
-   json_object = json.dumps(json_dict)
    try:
-      status = requests.post("http://80.208.228.90:8080/record/insert", json = json_object)
+      status = requests.post("http://80.208.228.90:8080/record/insert", json={
+         "deviceUUID": device_UUID,
+         "temperature": temperature,
+         "humidity": humidity,
+         "batteryv": batteryv,
+         "latitude": latitude,
+         "longitude": longitude,
+         "timestamp": timestamp
+      })
+      print(status)
    except Exception:
       traceback.print_exc()
    

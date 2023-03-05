@@ -1,4 +1,8 @@
 from APIConnections import get_device_uuid, send_sensor_data
+import calendar
+import time
 
-send_sensor_data("UUID", 122323, 23, 23, 23, 42, 42)
-print(get_device_uuid())
+current_GMT = time.gmtime()
+ts = calendar.timegm(current_GMT)
+print(type(ts))
+send_sensor_data(get_device_uuid()[0], 1678035029 * 1000, 23, 23, 23, 43, 43)

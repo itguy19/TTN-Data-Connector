@@ -14,6 +14,8 @@ TTN MQTT Documentation: https://www.thethingsindustries.com/docs/integrations/mq
 
 import json
 import paho.mqtt.client as mqtt
+import calendar
+import time
 from APIConnections import send_sensor_data, get_device_uuid
 from ReadData import read_api_key, read_app_id
 
@@ -55,14 +57,14 @@ def on_message(client, userdata, msg):
     humidity = themsg["uplink_message"]["decoded_payload"]["Hum_SHT"]
     batteryv = themsg["uplink_message"]["decoded_payload"]["BatV"]
     temperature = themsg["uplink_message"]["decoded_payload"]["TempC_SHT"]
-    timestamp = themsg["uplink_message"]["rx_metadata"][0]["timestamp"]
+    current_GMT = time.gmtime()
+    timestamp = calendar.timegm(current_GMT) * 1000
     latitude = themsg["uplink_message"]["locations"]["user"]["latitude"]
     longitude = themsg["uplink_message"]["locations"]["user"]["longitude"]
     device_UUID = themsg["end_device_ids"]["device_id"]
-    
+
     # Send data over to the DB
     send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, longitude, latitude)
-    print(humidity)
 
 if __name__ == "__main__":
     """_summary_
