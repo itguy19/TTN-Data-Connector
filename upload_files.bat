@@ -1,1 +1,1 @@
-scp .\APIConnections.py .\FetchData.py .\ReadData.py root@80.208.228.90:/home/IoT_Temperaturlogger/data_grabber/
+scp .\APIConnections.py .\FetchData.py .\ReadData.py andras@80.208.228.90:/home/IoT_Temperaturlogger/data_grabber/ -P 891
