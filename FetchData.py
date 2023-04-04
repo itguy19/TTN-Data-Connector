@@ -29,13 +29,13 @@ DEVICE_IDS = get_device_uuid()
 def on_connect(client, userdata, flags, rc):
     """_summary_
     Shows important information about the connection
-    
+
     Args:
         client (_type_): the client object
         userdata (_type_): important informations about the user
         flags (_type_): contains information about the session status
         rc (_type_): receive connection code (0 means success)
-    """    
+    """
     print("Connected to ", client._host, "port: ", client._port)
     print("Flags: ", flags, "return code: ", rc)
     # Subscribes to the device to receive data
@@ -43,15 +43,16 @@ def on_connect(client, userdata, flags, rc):
         TOPIC = f"v3/{APPLICATION_ID}@ttn/devices/{d}/up"
         client.subscribe(TOPIC)
 
+
 def on_message(client, userdata, msg):
     """_summary_
     The callback for when a PUBLISH message is received from the server.
-    
+
     Args:
         client (_type_): the client it connects to
         userdata (_type_): data of the user
         msg (_type_): message with relevant information
-    """     
+    """
     # Extract the neccessary information from the json file
     themsg = json.loads(msg.payload.decode("utf-8"))
     humidity = themsg["uplink_message"]["decoded_payload"]["Hum_SHT"]
@@ -64,12 +65,14 @@ def on_message(client, userdata, msg):
     device_UUID = themsg["end_device_ids"]["device_id"]
 
     # Send data over to the DB
-    send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, longitude, latitude)
+    send_sensor_data(device_UUID, timestamp, temperature,
+                     humidity, batteryv, longitude, latitude)
+
 
 if __name__ == "__main__":
     """_summary_
-    Main function where this cronjob process starts. 
-    """    
+    Main function where this system process starts. 
+    """
     # Establish connnection
     client = mqtt.Client()
     client.on_connect = on_connect

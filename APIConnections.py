@@ -11,46 +11,49 @@ is sent via the HTTP protocol to the server.
 '''
 
 import requests
-import json
+from requests.auth import HTTPBasicAuth
 import traceback
+from ReadData import read_iot_api_key
+
+IOT_API_KEY = read_iot_api_key()
+auth = HTTPBasicAuth("key", IOT_API_KEY)
+
 
 def send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, longitude, latitude):
-   """_summary_
+    """_summary_
 
-   Args:
-       device_UUID (_type_): A universal unique identifier for a device
-       timestamp (_type_): A UNIX timestamp that shows the time when the data was sent
-       temperature (_type_): Temperature in Celsius
-       humidity (_type_): Humidity
-       batteryv (_type_): The current battery voltage
-       longitude (_type_): Coordinate longitude
-       latitude (_type_): Coordinate latitude
-   """
-   
-   try:
-      status = requests.post("http://80.208.228.90:8080/record/insert", json={
-         "deviceUUID": device_UUID,
-         "temperature": temperature,
-         "humidity": humidity,
-         "batteryv": batteryv,
-         "latitude": latitude,
-         "longitude": longitude,
-         "timestamp": timestamp
-      })
-      print(status)
-   except Exception:
-      traceback.print_exc()
-   
+    Args:
+        device_UUID (str): A universal unique identifier for a device
+        timestamp (str): A UNIX timestamp that shows the time when the data was sent
+        temperature (float): Temperature in Celsius
+        humidity (float): Humidity
+        batteryv (float): The current battery voltage
+        longitude (float): Coordinate longitude
+        latitude (float): Coordinate latitude
+    """
+
+    try:
+        requests.post("http://80.208.228.90:8080/record/insert", auth=auth, json={
+            "deviceUUID": device_UUID,
+            "temperature": temperature,
+            "humidity": humidity,
+            "batteryv": batteryv,
+            "latitude": latitude,
+            "longitude": longitude,
+            "timestamp": timestamp
+        })
+    except Exception:
+        traceback.print_exc()
+
+
 def get_device_uuid():
-   """_summary_
+    """_summary_
 
-   Returns:
-       _type_: A list of device name strings
-   """
-   try:
-      result = requests.get("http://80.208.228.90:8080/device/list")
-   except Exception:
-      traceback.print_exc()
-   return [x["deviceUUID"] for x in result.json()]
-   
-   
+    Returns:
+        list: A list of device name strings
+    """
+    try:
+        result = requests.get("http://80.208.228.90:8080/device/list", auth=auth)
+    except Exception:
+        traceback.print_exc()
+    return [x["deviceUUID"] for x in result.json()]
