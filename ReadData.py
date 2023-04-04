@@ -1,4 +1,4 @@
-'''FetchData
+'''ReadData
     Author: Andras Tarlos
     Date: 03/04/23
     Version: 1.0
