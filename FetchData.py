@@ -1,7 +1,7 @@
 '''FetchData
     Author: Andras Tarlos
-    Date: 24/02/23
-    Version: 1.0
+    Date: 12/04/23
+    Version: 1.1
 
 Description:
 
@@ -40,7 +40,7 @@ def on_connect(client, userdata, flags, rc):
     print("Flags: ", flags, "return code: ", rc)
     # Subscribes to the device to receive data
     for d in DEVICE_IDS:
-        TOPIC = f"v3/{APPLICATION_ID}@ttn/devices/{d}/up"
+        TOPIC = f"v3/{APPLICATION_ID}@ttn/devices/{d}/up" 
         client.subscribe(TOPIC)
 
 

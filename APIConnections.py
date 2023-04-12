@@ -16,7 +16,6 @@ import traceback
 from ReadData import read_iot_api_key
 
 IOT_API_KEY = read_iot_api_key()
-auth = HTTPBasicAuth("key", IOT_API_KEY)
 
 
 def send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, longitude, latitude):
@@ -30,18 +29,19 @@ def send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, lo
         batteryv (float): The current battery voltage
         longitude (float): Coordinate longitude
         latitude (float): Coordinate latitude
+        key (str): The IOT-API access key
     """
 
     try:
-        requests.post("http://80.208.228.90:8080/record/insert", auth=auth, json={
+        requests.post("http://80.208.228.90:8080/record/insert", json={
             "deviceUUID": device_UUID,
             "temperature": temperature,
             "humidity": humidity,
             "batteryv": batteryv,
             "latitude": latitude,
             "longitude": longitude,
-            "timestamp": timestamp
-        })
+            "timestamp": timestamp,
+            "key": IOT_API_KEY})
     except Exception:
         traceback.print_exc()
 
@@ -53,7 +53,8 @@ def get_device_uuid():
         list: A list of device name strings
     """
     try:
-        result = requests.get("http://80.208.228.90:8080/device/list", auth=auth)
+        result = requests.get(
+            "http://80.208.228.90:8080/device/list")
     except Exception:
         traceback.print_exc()
     return [x["deviceUUID"] for x in result.json()]
