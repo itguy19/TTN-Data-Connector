@@ -16,9 +16,9 @@ These python files collect data from all the sensors that are registered on The 
 
 ```touch iot_api_key```
 
-<p>The API key file should contain the API key for the TTN application (See how you can create a new application: )</p>
+<p>The API key file should contain the API key for the TTN application (See how you can create a new application: https://www.youtube.com/watch?v=403yK_RaONE), the app_id file should have the name of the TTN application and the iot_app_id file should have the key to access our API on the Linux server.</p>
 
-<p>... and use python3 to start FetchData.py.</p>
+<p>After pasting the correct keys in their according files, all there is left is just to use python3 to start FetchData.py.</p>
 
 ```python3 FetchData.py```
 
