@@ -9,9 +9,14 @@ These python files collect data from all the sensors that are registered on The 
 <p>Create a new directory called "data" in the cloned repository and create three new files with these names: api_key, app_id nad iot_api_key.</p>
 
 ```mkdir data```
+
 ```touch api_key```
+
 ```touch app_id```
+
 ```touch iot_api_key```
+
+<p>The API key file should contain the API key for the TTN application (See how you can create a new application: )</p>
 
 <p>... and use python3 to start FetchData.py.</p>
 
