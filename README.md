@@ -1,5 +1,5 @@
 # TTN-Data-Connector
-These python files collect data from sensors that are registered on The Things Network (TTN) and save it in a database.
+These python files collect data from all the sensors that are registered on The Things Network (TTN) and save it in a MySQL database on a Linux server. The script connects to the database via an API on the server.
 
 ## How to execute
 <p>Let's clone the respository first...</p>
