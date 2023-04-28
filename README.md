@@ -2,9 +2,17 @@
 These python files collect data from all the sensors that are registered on The Things Network (TTN) and save it in a MySQL database on a Linux server. The script connects to the database via an API on the server.
 
 ## How to execute
-<p>Let's clone the respository first...</p>
+<p>Let's clone the respository first.</p>
 
 ```git clone https://github.com/itguy19/TTN-Data-Connector.git```
+
+<p>Create a new directory called "data" in the cloned repository and create three new files with these names: api_key, app_id nad iot_api_key.</p>
+
+```mkdir data```
+```touch api_key```
+```touch app_id```
+```touch iot_api_key```
+
 <p>... and use python3 to start FetchData.py.</p>
 
 ```python3 FetchData.py```
