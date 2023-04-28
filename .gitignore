@@ -3,3 +3,4 @@ data/api_key
 data/iot_api_key
 upload_files.bat
 test.py
+__pycache__
