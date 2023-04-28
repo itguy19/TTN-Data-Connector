@@ -3,6 +3,8 @@ These python files collect data from sensors that are registered on The Things N
 
 ## How to execute
 <p>Let's clone the respository first...</p>
+
 ```git clone https://github.com/itguy19/TTN-Data-Connector.git```
 <p>... and use python3 to start FetchData.py.</p>
+
 ```python3 FetchData.py```
