@@ -1,7 +1,7 @@
 '''ReadData
     Author: Andras Tarlos
-    Date: 03/04/23
-    Version: 1.0
+    Date: 12/04/23
+    Version: 1.1
 
 Description:
 
@@ -22,20 +22,23 @@ def read_file(file):
 
     Returns:
         str: Returns the key from the selected file
-    """    
+    """
     try:
         with open("data/" + file, 'r') as fd:
             lines = fd.readline()
             fd.close()
             return lines
     except IOError:
-        raise Exception("Can't open password file for reading.") 
-    
+        raise Exception("Can't open password file for reading.")
+
+
 def read_api_key():
     return read_file("api_key")
 
-def read_app_id():    
+
+def read_app_id():
     return read_file("app_id")
+
 
 def read_iot_api_key():
     return read_file("iot_api_key")

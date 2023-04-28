@@ -8,6 +8,7 @@ Description:
 This Python script sends and retrieves data to an API (Application Programming Interface). The information
 is sent via the HTTP protocol to the server.
 
+Uplink test data: 0E4F0000012900009D017E
 '''
 
 import requests
@@ -33,7 +34,7 @@ def send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, lo
     """
 
     try:
-        requests.post("http://80.208.228.90:8080/record/insert", json={
+        request = requests.post("http://80.208.228.90:8080/record/insert", json={
             "deviceUUID": device_UUID,
             "temperature": temperature,
             "humidity": humidity,
@@ -42,6 +43,7 @@ def send_sensor_data(device_UUID, timestamp, temperature, humidity, batteryv, lo
             "longitude": longitude,
             "timestamp": timestamp,
             "key": IOT_API_KEY})
+        print(request.status_code)
     except Exception:
         traceback.print_exc()
 
@@ -53,8 +55,9 @@ def get_device_uuid():
         list: A list of device name strings
     """
     try:
-        result = requests.get(
+        request = result = requests.get(
             "http://80.208.228.90:8080/device/list")
+        print(request.status_code)
     except Exception:
         traceback.print_exc()
     return [x["deviceUUID"] for x in result.json()]
